@@ -1,0 +1,781 @@
+/* =============================================================
+   STYLESHEET GLOBAL — dipakai oleh SEMUA komponen React di proyek ini.
+   Diimpor sekali lewat src/main.jsx (import "./index.css").
+
+   Struktur file ini:
+   1. Import font & reset dasar
+   2. Design tokens (variabel warna) di .vr-root
+   3. Style per bagian (nav, hero, section, dst) — diurutkan sesuai
+      urutan section di halaman, dari atas ke bawah
+   4. Media query responsif (mobile) di bagian bawah
+   5. Media query prefers-reduced-motion (mematikan semua animasi
+      untuk pengguna yang mengaktifkan pengaturan itu di perangkatnya)
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.vr-root {
+  /* ---- design tokens: ganti warna dari sini, otomatis berlaku
+     ke semua komponen yang memakai var(--nama-warna) ---- */
+  --ink: #15171a;
+  --paper: #f4f0e6;
+  --coral: #ff6b4a;
+  --gold: #ffc145;
+  --teal: #2ec4b6;
+  --violet: #8c6fff;
+  --muted: #a6a79d;
+  --muted-dark: #6b6c64;
+
+  font-family: "Inter", sans-serif;
+  color: var(--paper);
+  background: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+.vr-root a {
+  color: inherit;
+}
+.vr-root h1,
+.vr-root h2,
+.vr-root h3 {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  line-height: 1.18;
+  margin: 0;
+}
+.vr-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---- scroll progress ----
+   Bar tipis di paling atas layar (dipakai oleh ScrollProgress.jsx).
+   Lebarnya diatur lewat inline style dari React, di sini cuma
+   posisi & warnanya. */
+.vr-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  z-index: 100;
+  background: linear-gradient(90deg, var(--coral), var(--gold), var(--teal), var(--violet));
+  transition: width 0.1s linear;
+}
+
+/* ---- reveal-on-scroll base ----
+   Dipakai oleh komponen Reveal.jsx & elemen lain yang animasi
+   muncul saat di-scroll. State awal transparan+turun sedikit,
+   lalu class "reveal-in" ditambahkan lewat JS saat elemen terlihat. */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- split headline (mount animation) ----
+   Dipakai oleh SplitHeadline.jsx. Tiap kata dibungkus 2 span:
+   "mask" (jendela overflow:hidden) dan "word" (yang bergerak). */
+.split-headline {
+  font-size: clamp(34px, 5vw, 56px);
+  max-width: 640px;
+  overflow: visible;
+}
+.split-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.split-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: wordUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes wordUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- nav ----
+   Styling untuk Header.jsx: logo, menu desktop, indikator
+   section aktif, dan tombol menu mobile. */
+.vr-header {
+  position: sticky;
+  top: 3px;
+  z-index: 50;
+  background: rgba(21, 23, 26, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(244, 240, 230, 0.1);
+}
+.vr-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+.vr-logo {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vr-logo-mark {
+  /* logo aslinya berbentuk vertikal (lebih tinggi dari lebar),
+     jadi kotaknya dibuat tidak persegi supaya tidak banyak ruang kosong */
+  width: 24px;
+  height: 30px;
+  display: block;
+  object-fit: contain; /* jaga proporsi asli, tidak gepeng/melar */
+  flex-shrink: 0;
+}
+.vr-navlinks {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.vr-navlinks li {
+  list-style: none;
+}
+.vr-nav-indicator {
+  position: absolute;
+  bottom: -2px;
+  height: 2px;
+  background: var(--paper);
+  transition: left 0.3s cubic-bezier(0.3, 0.8, 0.3, 1), width 0.3s cubic-bezier(0.3, 0.8, 0.3, 1),
+    opacity 0.2s ease;
+}
+.vr-navlinks button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  color: var(--muted);
+  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+.vr-navlinks button.is-active,
+.vr-navlinks button:hover,
+.vr-navlinks button:focus-visible {
+  color: var(--paper);
+}
+.vr-navlinks button:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.vr-navlinks .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+.vr-navlinks button:hover .dot {
+  transform: scale(1.3);
+}
+.vr-navtoggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(244, 240, 230, 0.3);
+  color: var(--paper);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.vr-mobilenav {
+  display: none;
+}
+
+/* ---- hero ----
+   Styling untuk Hero.jsx: latar bertitik, blob warna melayang,
+   grid headline+ilustrasi, chip layanan, dan statistik. */
+.vr-hero {
+  position: relative;
+  padding: 88px 0 72px;
+  overflow: hidden;
+  background-image: radial-gradient(rgba(244, 240, 230, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+.vr-blob-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.25s ease-out;
+}
+.vr-blob {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  top: -120px;
+  right: -100px;
+  background: radial-gradient(circle at 30% 30%, var(--coral), transparent 60%),
+    radial-gradient(circle at 70% 70%, var(--violet), transparent 60%);
+  filter: blur(70px);
+  opacity: 0.32;
+  animation: blobPulse 9s ease-in-out infinite;
+}
+@keyframes blobPulse {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.12) rotate(18deg);
+  }
+}
+
+.vr-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr;
+  gap: 48px;
+  align-items: center;
+}
+.vr-hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.05s forwards;
+}
+.vr-hero-kicker .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+  animation: pulseDot 2.2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.4);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vr-hero p.lead {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 480px;
+  margin-top: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.5s forwards;
+}
+
+.vr-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+.vr-pillar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(244, 240, 230, 0.18);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  color: var(--muted);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
+}
+.vr-pillar:hover {
+  border-color: rgba(244, 240, 230, 0.5);
+  transform: translateY(-3px);
+}
+.vr-pillar .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.vr-stats {
+  display: flex;
+  gap: 44px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+.stat strong {
+  font-family: "Unbounded", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+.stat span {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.vr-hero-illustration {
+  justify-self: center;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.25s ease-out;
+}
+.segment-mark {
+  display: block;
+}
+.seg {
+  animation: floaty 4.5s ease-in-out infinite;
+  transform-origin: center;
+}
+.seg-1 {
+  animation-delay: 0s;
+}
+.seg-2 {
+  animation-delay: 0.3s;
+}
+.seg-3 {
+  animation-delay: 0.6s;
+}
+.seg-4 {
+  animation-delay: 0.9s;
+}
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(2.5deg);
+  }
+}
+
+/* ---- section shared ----
+   Style umum yang dipakai semua section (padding, judul, dst).
+   Class ".light" dipakai section dengan latar terang (About,
+   Work, Clients) supaya warna teks otomatis menyesuaikan. */
+.vr-section {
+  padding: 88px 0;
+}
+.vr-section.light {
+  background: var(--paper);
+  color: var(--ink);
+}
+.vr-section-head {
+  margin-bottom: 44px;
+  max-width: 560px;
+}
+.vr-section-head h2 {
+  font-size: clamp(26px, 3.4vw, 38px);
+}
+.vr-section.light .vr-section-head p {
+  color: var(--muted-dark);
+}
+.vr-section-head p {
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+/* ---- about ----
+   Styling khusus untuk About.jsx (grid 2 kolom: judul & paragraf). */
+.vr-about-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: start;
+}
+.vr-about-grid p {
+  font-size: 19px;
+  margin: 0;
+}
+.vr-about-grid p + p {
+  margin-top: 16px;
+}
+.vr-about-grid strong {
+  font-weight: 600;
+}
+
+/* ---- services accordion ----
+   Styling untuk Services.jsx. ".is-open" ditambahkan lewat JS
+   saat salah satu layanan sedang dibuka. */
+.vr-services {
+  display: flex;
+  flex-direction: column;
+}
+.vr-service {
+  border-top: 3px solid transparent;
+  border-bottom: 1px solid rgba(244, 240, 230, 0.14);
+  transition: border-top-color 0.3s ease;
+}
+.vr-service-head {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 4px;
+  color: inherit;
+  font-family: "Unbounded", sans-serif;
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight: 600;
+}
+.vr-service-head:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 4px;
+}
+.vr-service-head .plus {
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.vr-service.is-open .plus {
+  transform: rotate(45deg);
+}
+.vr-service-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+}
+.vr-service.is-open .vr-service-body {
+  max-height: 160px;
+}
+.vr-service-body p {
+  padding: 0 4px 26px;
+  max-width: 640px;
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ---- work ----
+   Styling untuk WorkTile.jsx (kartu karya + efek tilt saat hover). */
+.vr-work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.vr-work-tile {
+  border-radius: 14px;
+  padding: 20px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #15171a;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.6s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
+}
+.vr-work-tile:hover {
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+}
+.vr-work-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(21, 23, 26, 0.85);
+  color: var(--paper);
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  transform: rotate(-3deg);
+}
+.vr-work-name {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+}
+.vr-work-meta {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+/* ---- process ----
+   Styling untuk ProcessBar.jsx (garis progres) dan grid
+   penjelasan tahapan di Process.jsx. */
+.vr-process-track {
+  display: flex;
+  height: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 36px;
+  gap: 3px;
+}
+.vr-process-track span {
+  flex: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease;
+}
+.vr-process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.vr-process-step .num {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-bottom: 14px;
+}
+.vr-process-step h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.vr-process-step p {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ---- clients marquee (dual direction) ----
+   Styling untuk Clients.jsx. Efek gradasi transparan di kiri-kanan
+   (mask-image) supaya teks yang masuk/keluar terlihat halus,
+   bukan terpotong tegas. */
+.vr-marquee {
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.vr-marquee-track {
+  display: flex;
+  gap: 48px;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.vr-marquee-track.rev {
+  animation: marqueeRev 24s linear infinite;
+  margin-top: 18px;
+  opacity: 0.55;
+}
+.vr-marquee:hover .vr-marquee-track {
+  animation-play-state: paused;
+}
+.vr-marquee-track span {
+  font-family: "Unbounded", sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 2.6vw, 26px);
+  color: var(--muted-dark);
+  white-space: nowrap;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marqueeRev {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ---- contact ----
+   Styling untuk Contact.jsx, termasuk tombol email "magnetic". */
+.vr-contact {
+  background: var(--coral);
+  color: #201008;
+  padding: 96px 0;
+}
+.vr-contact h2 {
+  font-size: clamp(32px, 5.5vw, 64px);
+  max-width: 760px;
+}
+.vr-contact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+.vr-contact-email {
+  font-family: "Unbounded", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid #201008;
+  padding-bottom: 3px;
+  display: inline-block;
+  transition: transform 0.15s ease-out;
+}
+.vr-contact-meta {
+  font-size: 14px;
+  color: #3a2414;
+  text-align: right;
+}
+.vr-contact-meta div + div {
+  margin-top: 5px;
+}
+
+.vr-footer {
+  background: var(--ink);
+  color: var(--muted);
+  font-size: 13px;
+  padding: 22px 0 36px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .vr-hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .vr-hero-illustration {
+    justify-self: start;
+    margin-top: 8px;
+  }
+  .vr-about-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .vr-work-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .vr-process-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .vr-navlinks {
+    display: none;
+  }
+  .vr-navtoggle {
+    display: inline-block;
+  }
+  .vr-mobilenav.open {
+    display: flex;
+  }
+  .vr-mobilenav {
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 4px 28px 20px;
+    background: rgba(21, 23, 26, 0.98);
+  }
+  .vr-mobilenav li {
+    list-style: none;
+  }
+  .vr-mobilenav button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 17px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .vr-mobilenav .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+  .vr-contact-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .vr-contact-meta {
+    text-align: left;
+  }
+}
+@media (max-width: 560px) {
+  .vr-work-grid {
+    grid-template-columns: 1fr;
+  }
+  .vr-process-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vr-root * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .split-word {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .vr-hero-kicker,
+  .vr-hero p.lead,
+  .vr-pillar {
+    opacity: 1 !important;
+  }
+  .vr-process-track span {
+    transform: scaleX(1) !important;
+  }
+  .vr-marquee-track {
+    animation: none !important;
+  }
+  .vr-blob-wrap,
+  .vr-hero-illustration {
+    transform: none !important;
+  }
+}

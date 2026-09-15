@@ -1,0 +1,20 @@
+<!--
+  Ini file HTML utama yang dimuat browser pertama kali.
+  Isinya sengaja kosong (cuma <div id="root">) karena semua tampilan
+  di-generate oleh React lewat src/main.jsx.
+-->
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Judul yang muncul di tab browser -->
+    <title>Studio Ruas — Studio Identitas Visual</title>
+  </head>
+  <body>
+    <!-- React akan "menyuntikkan" seluruh aplikasi ke dalam div ini -->
+    <div id="root"></div>
+    <!-- Titik masuk (entry point) JavaScript aplikasi -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
