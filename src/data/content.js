@@ -100,7 +100,7 @@ export const studio = {
   name: "Studio Elevate",
   tagline: "Studio Elevate, Bekasi",
   email: "halo@studioruas.id",
-  address: "Jl. Braga ",
+  address: "Harvest City, Sekolah Developer Indonesia, Bekasi, Jawa Barat, Indonesia",
   hours: "Senin–Jumat, 09.00–17.00",
   phone: "+62 812 3456 7890",
 };
