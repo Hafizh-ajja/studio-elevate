@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="vr-wrap vr-footer">
       <span>© {new Date().getFullYear()} {studio.name}</span>
-      <span>Instagram · LinkedIn</span>
+      <span> <a href={studio.instagram} target="https://www.instagram.com/studioelevate.id/" rel="noopener noreferrer">Instagram</a> · <a href={studio.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
     </footer>
   );
 }
