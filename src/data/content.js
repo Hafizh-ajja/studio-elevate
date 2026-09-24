@@ -99,7 +99,7 @@ export const stats = [
 export const studio = {
   name: "Studio Elevate",
   tagline: "Studio Elevate, Bekasi",
-  email: "halo@studioruas.id",
+  email: "studioelevate@gmail.com",
   address: "Harvest City, Sekolah Developer Indonesia, Bekasi, Jawa Barat, Indonesia",
   hours: "Senin–Jumat, 09.00–17.00",
   phone: "+62 812 3456 7890",
