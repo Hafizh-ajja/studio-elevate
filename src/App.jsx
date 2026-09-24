@@ -10,6 +10,7 @@ import About from "./components/About";
 import Services from "./components/Services";
 import Work from "./components/Work";
 import Process from "./components/Process";
+import Pricing from "./components/Pricing";
 import Clients from "./components/Clients";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -29,6 +30,7 @@ export default function App() {
         <Work />      {/* grid contoh karya/portofolio */}
         <Process />   {/* tahapan cara kerja studio */}
         <Clients />   {/* daftar klien berjalan (marquee) */}
+        <Pricing />   {/* paket harga */}
         <Contact />   {/* ajakan menghubungi + info kontak */}
       </main>
 

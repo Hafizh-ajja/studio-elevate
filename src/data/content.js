@@ -16,42 +16,57 @@ export const navItems = [
   { id: "layanan", label: "Layanan", color: "var(--gold)" },
   { id: "karya", label: "Karya", color: "var(--teal)" },
   { id: "proses", label: "Proses", color: "var(--violet)" },
+  { id: "harga", label: "Harga", color: "var(--teal)" },
   { id: "kontak", label: "Kontak", color: "var(--coral)" },
 ];
 
-// Empat "pilar" layanan yang ditampilkan sebagai chip kecil di Hero.
+// Enam layanan yang ditampilkan sebagai chip kecil di Hero.
 export const pillars = [
-  { key: "identitas", label: "Identitas Merek", color: "var(--coral)" },
-  { key: "editorial", label: "Desain Editorial", color: "var(--gold)" },
-  { key: "kemasan", label: "Kemasan", color: "var(--teal)" },
-  { key: "digital", label: "Digital & Web", color: "var(--violet)" },
+  { key: "web", label: "Web Development", color: "var(--coral)" },
+  { key: "uiux", label: "UI/UX Design", color: "var(--gold)" },
+  { key: "ecommerce", label: "E-Commerce", color: "var(--teal)" },
+  { key: "api", label: "API & Integrasi", color: "var(--violet)" },
+  { key: "maintenance", label: "Maintenance & Support", color: "var(--coral)" },
+  { key: "seo", label: "Performa & SEO", color: "var(--gold)" },
 ];
 
 // Data lengkap untuk section Layanan (accordion yang bisa dibuka-tutup).
 export const services = [
   {
-    key: "identitas",
-    name: "Identitas Merek",
+    key: "web",
+    name: "Web Development",
     color: "var(--coral)",
-    desc: "Logo, sistem warna, tipografi, dan panduan penggunaan yang bisa dipakai konsisten di semua media.",
+    desc: "Aplikasi web custom dengan React, Next.js, dan arsitektur backend yang skalabel.",
   },
   {
-    key: "editorial",
-    name: "Desain Editorial",
+    key: "uiux",
+    name: "UI/UX Design",
     color: "var(--gold)",
-    desc: "Buku, laporan tahunan, dan majalah — tata letak yang memandu mata pembaca, bukan sekadar menata halaman.",
+    desc: "Riset pengguna, wireframe, hingga design system yang konsisten dan mudah dipelihara.",
   },
   {
-    key: "kemasan",
-    name: "Kemasan",
+    key: "ecommerce",
+    name: "E-Commerce",
     color: "var(--teal)",
-    desc: "Dari struktur dus sampai label kecil, tetap kuat bicara di rak yang ramai maupun di layar ponsel.",
+    desc: "Toko online performa tinggi terintegrasi payment gateway, inventori, dan analitik.",
   },
   {
-    key: "digital",
-    name: "Digital & Web",
+    key: "api",
+    name: "API & Integrasi",
     color: "var(--violet)",
-    desc: "Situs dan aset digital yang menerjemahkan identitas visual ke layar tanpa kehilangan karakter.",
+    desc: "REST/GraphQL API, integrasi pihak ketiga, dan otomatisasi antar sistem Anda.",
+  },
+  {
+    key: "maintenance",
+    name: "Maintenance & Support",
+    color: "var(--coral)",
+    desc: "Pemantauan, patch keamanan, dan dukungan teknis berkelanjutan pasca-peluncuran.",
+  },
+  {
+    key: "seo",
+    name: "Performa & SEO",
+    color: "var(--gold)",
+    desc: "Optimasi Core Web Vitals, aksesibilitas, dan struktur teknis yang ramah mesin pencarian.",
   },
 ];
 
@@ -85,6 +100,55 @@ export const clients = [
   "Tenun Ambo",
   "Kopi Jalur",
   "Panggung Kata",
+];
+
+
+// Paket harga yang ditampilkan di section Harga (Pricing.jsx).
+// `featured: true` = kartu yang tampil menonjol (warna terbalik).
+// Kosongkan `unit` kalau harganya bukan per proyek (contoh: "Custom").
+export const pricing = [
+  {
+    key: "starter",
+    name: "Starter",
+    price: "Rp 300.000+",
+    unit: "/proyek",
+    desc: "Untuk landing page atau website profil bisnis.",
+    features: ["Hingga 5 halaman", "Desain UI custom", "Responsif penuh", "SEO dasar", "Revisi 2x"],
+    cta: "Pilih Starter",
+    featured: false,
+  },
+  {
+    key: "growth",
+    name: "Growth",
+    price: "Rp 1jt+",
+    unit: "/proyek",
+    desc: "Untuk aplikasi web dengan sistem backend & autentikasi.",
+    features: [
+      "Halaman & fitur tanpa batas wajar",
+      "Design system lengkap",
+      "API & integrasi pihak ketiga",
+      "Dashboard admin",
+      "Support 3 bulan",
+    ],
+    cta: "Pilih Growth",
+    featured: true,
+  },
+  {
+    key: "enterprise",
+    name: "Enterprise",
+    price: "Custom",
+    unit: "",
+    desc: "Untuk sistem skala besar dengan kebutuhan khusus.",
+    features: [
+      "Arsitektur microservices",
+      "SLA & dedicated engineer",
+      "Audit keamanan berkala",
+      "Infrastruktur multi-region",
+      "Support prioritas 24/7",
+    ],
+    cta: "Hubungi Kami",
+    featured: false,
+  },
 ];
 
 // Tiga angka statistik yang dianimasikan "menghitung naik" di Hero
