@@ -18,14 +18,15 @@ export default function About() {
         {/* delay={120} supaya paragraf ini muncul sedikit setelah judul di sebelah kiri */}
         <Reveal delay={120}>
           <p>
-            <strong>Elevate</strong> berarti segmen — bagian bambu yang dipisahkan buku, tumbuh satu
-            demi satu namun tetap menyatu jadi satu batang. Begitu juga cara kami bekerja: setiap
-            merek dibangun bertahap, ruas demi ruas, tanpa kehilangan arah keseluruhan.
+            <strong>Elevate</strong> berarti mengangkat sesuatu ke level yang lebih tinggi. Itu yang
+            kami kerjakan: mengubah ide, bisnis, atau sistem yang sudah berjalan menjadi produk
+            digital yang lebih cepat, lebih rapi, dan siap tumbuh.
           </p>
           <p>
-            Kami bukan studio yang menjual satu gaya untuk semua klien. Setiap proyek dimulai dari
-            riset — siapa yang bicara, siapa yang mendengar, dan apa yang ingin diingat orang
-            setelah semuanya selesai.
+            Kami studio pengembangan web di Bekasi. Dari desain UI/UX, website, dan toko online
+            sampai API dan integrasi, semuanya dikerjakan satu tim, jadi desain dan kode berjalan
+            searah sejak awal. Setelah peluncuran pun kami tetap mendampingi, karena produk yang
+            baik dirawat, bukan dilepas begitu saja.
           </p>
         </Reveal>
       </div>
